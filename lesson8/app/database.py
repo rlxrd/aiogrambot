@@ -24,3 +24,9 @@ async def cmd_start_db(user_id):
     if not user:
         cur.execute("INSERT INTO accounts (tg_id) VALUES ({key})".format(key=user_id))
         db.commit()
+
+
+async def send_to_all_db():
+    users = cur.execute("SELECT tg_id FROM accounts").fetchall()
+    print(users)
+    return users
