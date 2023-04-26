@@ -26,7 +26,8 @@ async def cmd_start_db(user_id):
         db.commit()
 
 
-async def send_to_all_db():
-    users = cur.execute("SELECT tg_id FROM accounts").fetchall()
-    print(users)
-    return users
+async def add_item(state):
+    async with state.proxy() as data:
+        cur.execute("INSERT INTO items (name, desc, price, photo, brand) VALUES (?, ?, ?, ?, ?)",
+                    (data['name'], data['desc'], data['price'], data['photo'], data['type']))
+        db.commit()
